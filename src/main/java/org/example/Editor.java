@@ -18,9 +18,9 @@ public class Editor {
         String fileString = "/Users/ryanoh/desktop/" + fileName + ".txt";
         try(Scanner scanner = new Scanner(Paths.get(fileString))){
             System.out.println("Found the file, what would you like to do?");
-            Set<String> set =  new LinkedHashSet<>();
+            List<String> list =  new ArrayList<>();
             while(scanner.hasNext()){
-                set.add(scanner.nextLine());
+                list.add(scanner.nextLine());
             }
             String prompt = "";
             while(true){
@@ -32,23 +32,23 @@ public class Editor {
                 System.out.println("Typing \"exit\" will exit the program");
                 prompt = userInterface.nextLine();
                 if(prompt.equals("read")){
-                    read(set);
+                    read(list);
                 }
                 if(prompt.equals("exit")){
                     System.out.println("Thank you using the text processor. Good bye");
                     break;
                 }
                 if(prompt.equals("sorted")){
-                    sortLines(set);
+                    sortLines(list);
                 }
                 if(prompt.equals("remove")){
-                    dupeLineRemover(set);
+                    dupeLineRemover(list);
                 }
                 if(prompt.equals("find")){
-                    findLine(userInterface,set);
+                    findLine(userInterface,list);
                 }
                 if(prompt.equals("replace")){
-                    findAndReplace(userInterface,set);
+                    findAndReplace(userInterface,list);
                 }
 
             }
@@ -58,17 +58,17 @@ public class Editor {
             System.out.println("Something went wrong");
         }
     }
-    public void read(Set<String> set){
-        for(String text : set){
+    public void read(List<String> list){
+        for(String text : list){
             System.out.println(text);
         }
     }
-    public void findLine(Scanner userInterface, Set<String> set){
+    public void findLine(Scanner userInterface, List<String> list){
 
         int counter = 1;
         System.out.println("Which line do you want to find?");
         String input = userInterface.nextLine();
-        for(String text: set){
+        for(String text: list){
             if(text.contains(input)){
                 System.out.println("The text was found on line: " + counter);
                 System.out.println(text);
@@ -76,7 +76,7 @@ public class Editor {
             counter++;
         }
     }
-    public void findAndReplace(Scanner userInterface, Set<String> set){
+    public void findAndReplace(Scanner userInterface, List<String> list){
 
         System.out.println("What string would you like to replace?");
         String input = userInterface.nextLine();
@@ -84,7 +84,7 @@ public class Editor {
         String newString = userInterface.nextLine();
         try(PrintWriter printWriter = new PrintWriter(new File("output.txt"))){
 
-            for(String text: set){
+            for(String text: list){
                 boolean stat = input.equalsIgnoreCase(text);
                 if(stat){
                     text = newString;
@@ -108,8 +108,8 @@ public class Editor {
         }
     }
     // dupe line
-    public void dupeLineRemover(Set<String> set){
-
+    public void dupeLineRemover(List<String> list){
+        Set<String> set = new LinkedHashSet<>(list);
         try(PrintWriter printWriter = new PrintWriter(new File("output.txt"))){
             for(String text: set){
                 printWriter.println(text);
@@ -120,13 +120,12 @@ public class Editor {
         }
         System.out.println("Dupe lines have been removed");
     }
-    public void sortLines(Set<String> set){
+    public void sortLines(List<String> list){
 
-        List<String> sortedList = new ArrayList<>(set);
-        Collections.sort(sortedList);
+        Collections.sort(list);
 
         try(PrintWriter printWriter = new PrintWriter(new File("output.txt"))){
-            for(String sortedText: sortedList){
+            for(String sortedText: list){
                 printWriter.println(sortedText);
                 System.out.println(sortedText);
             }

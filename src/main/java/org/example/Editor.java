@@ -3,6 +3,7 @@ package org.example;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -29,6 +30,7 @@ public class Editor {
                 System.out.println("Typing \"read\" will remove dupe lines");
                 System.out.println("Typing \"find\" will find text in the line");
                 System.out.println("Typing \"sorted\" will sort the lines of text");
+                System.out.println("Typing \"merge\" will merge the file with (a) new file(s)");
                 System.out.println("Typing \"exit\" will exit the program");
                 prompt = userInterface.nextLine();
                 if(prompt.equals("read")){
@@ -50,6 +52,10 @@ public class Editor {
                 if(prompt.equals("replace")){
                     findAndReplace(userInterface,list);
                 }
+                if(prompt.equals("merge")){
+                    // TODO: figure out where files are saved/stored
+                    mergeFiles(userInterface, fileName);
+                }
 
             }
 
@@ -58,6 +64,28 @@ public class Editor {
             System.out.println("Something went wrong");
         }
     }
+
+    private void mergeFiles(Scanner userInterface, String fileName) {
+        FileHandler handler = new FileHandler();
+        System.out.println("Which files would you like to merge this with?");
+        System.out.println("Enter a new file on each line below or 'done' when no more files to merge");
+
+        // Instantiate list of files to merge and read first input
+        List<Path> files = new ArrayList<>();
+        files.add(Paths.get(fileName));
+        String filePath = userInterface.nextLine();
+
+        // While
+        while (!Objects.equals(filePath, "done")) {
+            files.add(Paths.get(filePath));
+            filePath = userInterface.nextLine();
+        }
+
+        // Merge files and output file
+        handler.mergeFiles(files, "output.txt");
+        System.out.println("Files have been merged into output.txt");
+    }
+
     public void read(List<String> list){
         for(String text : list){
             System.out.println(text);

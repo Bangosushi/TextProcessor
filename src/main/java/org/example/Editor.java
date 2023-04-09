@@ -12,11 +12,12 @@ public class Editor {
     public Editor() throws IOException {
     }
 
-    public void start(){
+    public void start() throws Exception{
         Scanner userInterface = new Scanner(System.in);
-        System.out.println("type in the file name on your desktop");
+        System.out.println("type in the file name inside of the project");
         String fileName = userInterface.nextLine();
-        String fileString = "/Users/ryanoh/desktop/" + fileName + ".txt";
+        //String fileString = "/Users/ryanoh/desktop/" + fileName + ".txt";
+        String fileString = fileName + ".txt";
         try(Scanner scanner = new Scanner(Paths.get(fileString))){
             System.out.println("Found the file, what would you like to do?");
             List<String> list =  new ArrayList<>();
@@ -62,6 +63,8 @@ public class Editor {
         }catch(Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Something went wrong");
+            throw new Exception("the start function threw an error");
+
         }
     }
 
@@ -103,8 +106,11 @@ public class Editor {
             }
             counter++;
         }
+        if(counter == 1) {
+            System.out.println("The text was not found");
+        }
     }
-    public void findAndReplace(Scanner userInterface, List<String> list){
+    public void findAndReplace(Scanner userInterface, List<String> list) throws Exception {
 
         System.out.println("What string would you like to replace?");
         String input = userInterface.nextLine();
@@ -133,10 +139,11 @@ public class Editor {
             }
         }catch (Exception e){
             System.out.println("Error:" + e);
+            throw new Exception("the findAndReplace function threw an error");
         }
     }
     // dupe line
-    public void dupeLineRemover(List<String> list){
+    public void dupeLineRemover(List<String> list) throws Exception{
         Set<String> set = new LinkedHashSet<>(list);
         try(PrintWriter printWriter = new PrintWriter(new File("output.txt"))){
             for(String text: set){
@@ -145,10 +152,12 @@ public class Editor {
             }
         }catch (Exception e){
             System.out.println("Error:" + e);
+            throw new Exception("the dupeLineRemover function threw an error");
+
         }
         System.out.println("Dupe lines have been removed");
     }
-    public void sortLines(List<String> list){
+    public void sortLines(List<String> list) throws Exception{
 
         Collections.sort(list);
 
@@ -159,6 +168,8 @@ public class Editor {
             }
         }catch (Exception e){
             System.out.println("Error:" + e);
+            throw new Exception("the sortLines function threw an error");
+
         }
     }
 

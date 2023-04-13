@@ -212,6 +212,6 @@ public class EditorTest {
     @AfterEach
     void cleanFiles() {
         File output = new File("output.txt");
-//        output.delete();
+        output.delete();
     }
 }

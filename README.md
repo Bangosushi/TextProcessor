@@ -5,7 +5,7 @@ All you need to do is place a text file in the root directory of the project.
 
 ## How It's Made:
 
-**Tech used:** Java.
+**Tech used:** Java, JUnit
 
 
 ## Optimizations

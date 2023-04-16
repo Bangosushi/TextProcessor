@@ -27,7 +27,7 @@ public class Editor {
             while (true) {
                 System.out.println("Typing \"remove\" will remove dupe lines");
                 System.out.println("Typing \"replace\" will find and replace text");
-                System.out.println("Typing \"read\" will remove dupe lines");
+                System.out.println("Typing \"read\" will read lines and display them");
                 System.out.println("Typing \"find\" will find text in the line");
                 System.out.println("Typing \"sorted\" will sort the lines of text");
                 System.out.println("Typing \"merge\" will merge the file with (a) new file(s)");
